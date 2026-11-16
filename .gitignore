@@ -1,0 +1,6 @@
+data/
+.venv/
+*.csv
+*.zip
+*.parquet
+.env
