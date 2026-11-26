@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: retail
+    description: "Tables built by the PySpark notebooks (silver layer and the SCD2 price dimension)."
+    database: workspace          # Unity Catalog catalog
+    schema: retail
+    tables:
+      - name: silver_events
+        description: "Deduplicated, typed clickstream events (Oct + Nov 2019)."
+        columns:
+          - name: event_ts
+            data_tests: [not_null]
+          - name: event_type
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ["view", "cart", "purchase"]
+      - name: dim_product_price
+        description: "SCD2 price history: one row per product price version."
+        columns:
+          - name: price_key
+            data_tests: [unique, not_null]

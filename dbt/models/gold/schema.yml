@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: gold_daily_metrics
+    description: "Daily views, carts, purchases and conversion."
+    columns:
+      - name: event_date
+        data_tests: [unique, not_null]
+
+  - name: fct_purchases
+    description: "Purchases joined to the price version valid on the purchase date."
+    columns:
+      - name: price_key
+        description: "Must always find a price version: proves the point-in-time join has no gaps."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: source('retail', 'dim_product_price')
+                field: price_key
+
+  - name: gold_category_monthly
+    description: "October vs November purchases per category."
+    columns:
+      - name: category
+        data_tests: [unique, not_null]

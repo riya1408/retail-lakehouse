@@ -8,3 +8,8 @@ data/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+.venv-dbt/
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
